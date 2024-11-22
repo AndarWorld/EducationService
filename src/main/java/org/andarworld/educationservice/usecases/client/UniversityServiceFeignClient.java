@@ -4,7 +4,6 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.andarworld.educationservice.usecases.dto.UniversityResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -19,6 +18,6 @@ public interface UniversityServiceFeignClient {
 
     default UniversityResponseDto getUniversityFallback(String uuid, Throwable throwable) {
         return new UniversityResponseDto("FallbackTitle", "FallbackCity",
-                null, null, null, null);
+                "This answer returned due to error", null, null, null);
     }
 }

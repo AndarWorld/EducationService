@@ -10,10 +10,12 @@ public class GlobalFeignErrorDecoder implements ErrorDecoder {
     @Override
     public Exception decode(String s, Response response) {
         switch (response.status()) {
-            case 400: return new BadRequestException("Bad request for "+s);
+            case 400: return new BadRequestException("Bad request! Please, insert valid parameters.");
             case 404: return new ResourceNotFoundException("Resource not found!");
             default: return new GeneralException
                     ("Unexpected response status code, reason: "+response.reason(), response.status());
         }
     }
 }
+
+
