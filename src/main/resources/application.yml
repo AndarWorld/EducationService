@@ -31,7 +31,7 @@ resilience4j:
         retry-exceptions:
           - org.andarworld.educationservice.api.exceptions.GeneralException
         max-attempts: 3
-        wait-duration: 2s
+        wait-duration: 1s
         event-consumer-buffer-size: 10
     instances:
       university-service:
