@@ -1,5 +1,6 @@
 package org.andarworld.educationservice.config;
 
+import feign.codec.ErrorDecoder;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

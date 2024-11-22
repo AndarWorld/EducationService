@@ -4,7 +4,40 @@ server:
 spring:
   application:
     name: Education-Service
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
 
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        record-exceptions:
+          - org.andarworld.educationservice.api.exceptions.GeneralException
+        sliding-window-size: 4
+        minimum-number-of-calls: 2
+        sliding-window-type: count_based
+        automatic-transition-from-open-to-half-open-enabled: true
+        max-wait-duration-in-half-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 3
+        event-consumer-buffer-size: 10
+    circuit-breaker-aspect-order: 1
+  retry:
+    instances:
+      university-service:
+        max-attempts: 3
+        wait-duration: 2s
+    retry-aspect-order: 2
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: circuitbreakers, circuitbreakerevents, retry, retryevents, retries, health
+  endpoint:
+    health:
+      show-details: always
 eureka:
   client:
     service-url:
@@ -14,3 +47,6 @@ logging:
   level:
     root: info
     org.andarworld.courseservice: debug
+    io.github.resilience4j: debug
+    org.springframework.cloud.openfeign: debug
+    feign: debug
