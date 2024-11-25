@@ -3,16 +3,14 @@ package org.andarworld.educationservice.usecases.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.andarworld.educationservice.usecases.EducationService;
-import org.andarworld.educationservice.usecases.client.CourseServiceClient;
 import org.andarworld.educationservice.usecases.client.CourseServiceFeignClient;
-import org.andarworld.educationservice.usecases.client.UniversityServiceClient;
 import org.andarworld.educationservice.usecases.client.UniversityServiceFeignClient;
 import org.andarworld.educationservice.usecases.dto.CourseResponseDto;
 import org.andarworld.educationservice.usecases.dto.EducationResponseDto;
 import org.andarworld.educationservice.usecases.dto.UniversityResponseDto;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,5 +29,14 @@ public class EducationServiceImpl implements EducationService {
         UniversityResponseDto universityResponseDto = universityServiceClient.getUniversity(uuid);
         List<CourseResponseDto> courseResponseDtos = courseServiceClient.getAllCourses(uuid);
         return new EducationResponseDto(universityResponseDto, courseResponseDtos);
+    }
+
+    @Override
+    public List<String> getAdminEducation() {
+        List<String> list = new ArrayList<>();
+        list.add("Hi from education admin!");
+        list.add(universityServiceClient.getAdminUniversity());
+        list.add(courseServiceClient.getAdminCourse());
+        return list;
     }
 }

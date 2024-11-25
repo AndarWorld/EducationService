@@ -16,6 +16,9 @@ public interface UniversityServiceFeignClient {
     @CircuitBreaker(name = "university-service", fallbackMethod = "getUniversityFallback")
     UniversityResponseDto getUniversity(@PathVariable String uuid);
 
+    @GetMapping("/api/universities/admin")
+    String getAdminUniversity();
+
     default UniversityResponseDto getUniversityFallback(String uuid, Throwable throwable) {
         return new UniversityResponseDto("FallbackTitle", "FallbackCity",
                 "This answer returned due to error", null, null, null);

@@ -3,7 +3,13 @@ server:
 
 spring:
   application:
-    name: Education-Service
+    name: EDUCATION-SERVICE
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${KEYCLOAK_JWK_URI}
+          issuer-uri:  ${KEYCLOAK_ISSUER_URI}
 
 resilience4j:
   circuitbreaker:
@@ -57,7 +63,7 @@ eureka:
 logging:
   level:
     root: info
-    org.andarworld.courseservice: debug
+    org.andarworld.educationservice: debug
     io.github.resilience4j: debug
     org.springframework.cloud.openfeign: debug
     feign: debug

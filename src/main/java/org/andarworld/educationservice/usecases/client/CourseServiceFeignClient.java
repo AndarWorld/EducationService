@@ -17,6 +17,9 @@ public interface CourseServiceFeignClient {
     @CircuitBreaker(name = "course-service", fallbackMethod = "getAllCoursesFallback")
     List<CourseResponseDto> getAllCourses(@PathVariable String uuid);
 
+    @GetMapping("/api/courses/admin")
+    String getAdminCourse();
+
     default List<CourseResponseDto> getAllCoursesFallback(String uuid, Throwable throwable) {
         return List.of(new CourseResponseDto
                 ("0.0.0.0.", "TestName", "This answer returned due to error",

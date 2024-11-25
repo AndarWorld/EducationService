@@ -4,11 +4,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.andarworld.educationservice.usecases.EducationService;
 import org.andarworld.educationservice.usecases.dto.EducationResponseDto;
+import org.springframework.boot.actuate.autoconfigure.metrics.SystemMetricsAutoConfiguration;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/education")
@@ -17,6 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class EducationApiController {
 
     private final EducationService educationService;
+    private final SystemMetricsAutoConfiguration systemMetricsAutoConfiguration;
+
+    @GetMapping("/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<String>> getAdminString() {
+        List<String> educationResponseDto = educationService.getAdminEducation();
+        return ResponseEntity.ok(educationResponseDto);
+    }
 
     @GetMapping("/{uuid}")
     public ResponseEntity<EducationResponseDto> getUniversityCourses(@PathVariable("uuid") String uuid) {
