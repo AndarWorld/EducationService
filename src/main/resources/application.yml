@@ -8,15 +8,9 @@ server:
 
 spring:
   profiles:
-    active: default
+    active: ${PROFILES:default}
   application:
     name: EDUCATION-SERVICE
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jwk-set-uri: ${KEYCLOAK_JWK_URI}
-          issuer-uri:  ${KEYCLOAK_ISSUER_URI}
   config:
     import: configserver:http://localhost:8787
 
@@ -55,7 +49,6 @@ resilience4j:
         base-config: default
     retry-aspect-order: 2
 
-
 management:
   endpoints:
     web:
@@ -64,11 +57,6 @@ management:
   endpoint:
     health:
       show-details: always
-
-eureka:
-  client:
-    service-url:
-      defaultZone: ${EUREKA_URL}
 
 logging:
   level:
