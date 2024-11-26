@@ -1,7 +1,14 @@
+from:
+  config:
+    application: from_application_yml
+    educationservice: from_education_service
+
 server:
   port: ${SERVER_PORT:0}
 
 spring:
+  profiles:
+    active: default
   application:
     name: EDUCATION-SERVICE
   security:
@@ -10,6 +17,8 @@ spring:
         jwt:
           jwk-set-uri: ${KEYCLOAK_JWK_URI}
           issuer-uri:  ${KEYCLOAK_ISSUER_URI}
+  config:
+    import: configserver:http://localhost:8787
 
 resilience4j:
   circuitbreaker:
@@ -51,10 +60,11 @@ management:
   endpoints:
     web:
       exposure:
-        include: circuitbreakers, circuitbreakerevents, retryevents, retries, health
+        include: circuitbreakers, circuitbreakerevents, retryevents, retries, health, env
   endpoint:
     health:
       show-details: always
+
 eureka:
   client:
     service-url:
