@@ -37,7 +37,7 @@ public class EducationApiController {
         return ResponseEntity.ok(educationResponseDto);
     }
 
-    @GetMapping("/confServ")
+    @GetMapping("/configServer")
     public String getConfServString() {
         return str1 +"   " + str2;
     }
